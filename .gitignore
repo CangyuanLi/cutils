@@ -1,0 +1,27 @@
+# Template .gitignore file
+
+# folder ignores
+**/__pycache__
+**/venv
+
+**/.DS_Store
+**/.vscode
+
+**.csv
+**.dta
+**.smcl
+**.zip
+
+**.RData
+**.Rhistory
+
+**.dct
+**.log
+**.aux
+
+**.docx
+**.ppt
+**.xlsx
+**.xls
+
+**/*-checkpoint*
