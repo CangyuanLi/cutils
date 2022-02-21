@@ -28,6 +28,9 @@ def even_split(lst: list, n: int) -> list[list]:
     Returns:
         list: List of n lists
     """
+    if n <= 0:
+        raise ValueError("n must be greater than 0")
+        
     k, m = divmod(len(lst), n)
 
     return [lst[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
