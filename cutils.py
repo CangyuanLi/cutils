@@ -39,6 +39,26 @@ def find_last_index(x: Sequence, target):
 
     return None
 
+def flatten(container: Iterable) -> list:
+    """Flatten an arbitrarily nested list. Does
+    not unpack string values. Converting a generator
+    object to a list is faster than .append.
+
+    Args:
+        container (Iterable): Any container
+
+    Returns:
+        list: A flattened list
+    """
+    def _flatten(container: Iterable):
+        for i in container:
+            if isinstance(i, (list, set, tuple)):
+                for j in _flatten(i):
+                    yield j
+            else:
+                yield i
+    return list(_flatten(container))
+
 def get_factors(n):
     factors = set()
     for i in range(1, int(math.sqrt(n)) + 1):
