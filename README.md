@@ -39,3 +39,5 @@ What happened here? The empty lists in dict1 are actually the same list, so when
 ```{python}
 dict.fromkeys(["a", "b", "c"], [])
 ```
+
+or if you pass in a mutable object as a default argument to a function.
