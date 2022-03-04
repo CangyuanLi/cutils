@@ -60,6 +60,7 @@ def flatten(container: Iterable) -> list:
                     yield j
             else:
                 yield i
+
     return list(_flatten(container))
 
 def get_factors(n):
@@ -70,3 +71,6 @@ def get_factors(n):
             factors.add(int(n // i))
 
     return factors
+
+def ordered_unique(lst):
+    return list(dict.fromkeys(lst))
