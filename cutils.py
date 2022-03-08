@@ -1,5 +1,7 @@
 from collections.abc import Iterable, Sequence
 import math
+import time
+from typing import Callable
 
 def contains(x: Iterable, elements: Iterable) -> bool:
     return any(elem in x for elem in elements)
@@ -17,6 +19,12 @@ def chunk_list(lst: list, n: int) -> list:
     """
     for i in range(0, len(lst), n):
         yield lst[i:i+n]
+
+def display_time(seconds):
+    m, s = divmod(seconds, 60)
+    h, m = divmod(m, 60)
+
+    return f"{h} hours, {m} minutes, and {s:.2f} seconds"
 
 def even_split(lst: list, n: int) -> list[list]:
     """Breaks a list into n roughly equal parts
@@ -63,7 +71,10 @@ def flatten(container: Iterable) -> list:
 
     return list(_flatten(container))
 
-def get_factors(n):
+def get_factors(n: int):
+    if isinstance(n) is not int:
+        raise(ValueError("Must pass in an integer"))
+
     factors = set()
     for i in range(1, int(math.sqrt(n)) + 1):
         if n % i == 0:
@@ -72,5 +83,30 @@ def get_factors(n):
 
     return factors
 
-def ordered_unique(lst):
+def ordered_unique(lst: list):
     return list(dict.fromkeys(lst))
+
+def _time_func(func: Callable):
+    start = time.perf_counter()
+    func()
+    elapsed = time.perf_counter() - start
+    
+    return elapsed
+
+def time_func(func: Callable, iterations: int):
+    total = sum(_time_func(func) for _ in range(iterations))
+
+    avg_elapsed = total / iterations
+
+    if avg_elapsed < 0.01:
+        avg_display = f"{avg_elapsed * 1_000_000:.3f} microseconds"
+    else:
+        avg_display = f"{avg_elapsed:.2f}"
+
+    result = (
+        f"Function ran {iterations:,} times and completed in {display_time(total)} "
+        f"for an average time of {avg_display}"
+    )
+    print(result)
+
+    return (total, avg_elapsed)
