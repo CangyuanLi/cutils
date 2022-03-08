@@ -72,7 +72,7 @@ def flatten(container: Iterable) -> list:
     return list(_flatten(container))
 
 def get_factors(n: int):
-    if isinstance(n) is not int:
+    if isinstance(n, int) is False:
         raise(ValueError("Must pass in an integer"))
 
     factors = set()
