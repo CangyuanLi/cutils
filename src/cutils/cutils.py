@@ -1,7 +1,19 @@
+# Imports
+
 from collections.abc import Iterable, Sequence
 import math
 import time
 from typing import Callable
+
+# Globals
+
+__all__ = [
+    "contains", "chunk_list", "display_time", "even_split",
+    "find_last_index", "flatten", "get_factors", "ordered_unique",
+    "time_func"
+]
+
+# Functions
 
 def contains(x: Iterable, elements: Iterable) -> bool:
     return any(elem in x for elem in elements)
@@ -71,7 +83,7 @@ def flatten(container: Iterable) -> list:
 
     return list(_flatten(container))
 
-def get_factors(n: int):
+def get_factors(n: int) -> set:
     if isinstance(n, int) is False:
         raise(ValueError("Must pass in an integer"))
 
@@ -83,7 +95,7 @@ def get_factors(n: int):
 
     return factors
 
-def ordered_unique(lst: list):
+def ordered_unique(lst: list) -> list:
     return list(dict.fromkeys(lst))
 
 def _time_func(func: Callable):
@@ -93,7 +105,20 @@ def _time_func(func: Callable):
     
     return elapsed
 
-def time_func(func: Callable, iterations: int):
+def time_func(func: Callable, iterations: int=1, quiet: bool=False) -> tuple[float, float]:
+    """Pass in a function to be timed, along with how many times it
+    should be run, ex:
+        cutils.time_func(lambda: time.sleep(1), 100)
+    will run time.sleep(1) 100 times.
+
+    Args:
+        func (Callable): Any function
+        iterations (int, optional): Number of times to run func. Defaults to 1.
+        quiet (bool, optional): Whether to print stats. Defaults to False.
+
+    Returns:
+        tuple[float, float]: (total time, average time)
+    """
     total = sum(_time_func(func) for _ in range(iterations))
 
     avg_elapsed = total / iterations
@@ -103,10 +128,12 @@ def time_func(func: Callable, iterations: int):
     else:
         avg_display = f"{avg_elapsed:.2f}"
 
-    result = (
-        f"Function ran {iterations:,} times and completed in {display_time(total)} "
-        f"for an average time of {avg_display}"
-    )
-    print(result)
+    if quiet is False:
+        result = (
+            f"Function ran {iterations:,} times and completed in {display_time(total)} "
+            f"for an average time of {avg_display}"
+        )
+
+        print(result)
 
     return (total, avg_elapsed)
