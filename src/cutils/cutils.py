@@ -5,14 +5,6 @@ import math
 import time
 from typing import Callable
 
-# Globals
-
-__all__ = [
-    "contains", "chunk_list", "display_time", "even_split",
-    "find_last_index", "flatten", "get_factors", "ordered_unique",
-    "time_func"
-]
-
 # Functions
 
 def contains(x: Iterable, elements: Iterable) -> bool:
