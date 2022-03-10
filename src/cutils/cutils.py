@@ -115,10 +115,10 @@ def time_func(func: Callable, iterations: int=1, quiet: bool=False) -> tuple[flo
 
     avg_elapsed = total / iterations
 
-    if avg_elapsed < 0.01:
+    if avg_elapsed < 0.1:
         avg_display = f"{avg_elapsed * 1_000_000:.3f} microseconds"
     else:
-        avg_display = f"{avg_elapsed:.2f}"
+        avg_display = f"{avg_elapsed:.2f} seconds"
 
     if quiet is False:
         result = (
