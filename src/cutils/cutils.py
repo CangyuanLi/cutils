@@ -24,7 +24,7 @@ def chunk_list(lst: list, n: int) -> list:
     for i in range(0, len(lst), n):
         yield lst[i:i+n]
 
-def display_time(seconds):
+def display_time(seconds: float):
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
 
@@ -47,7 +47,7 @@ def even_split(lst: list, n: int) -> list[list]:
 
     return [lst[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
-def find_last_index(x: Sequence, target):
+def find_last_index(x: Sequence, target) -> any:
     for i in range(len(x) - 1, -1, -1):
         if x[i] == target:
             return i
@@ -90,7 +90,7 @@ def get_factors(n: int) -> set:
 def ordered_unique(lst: list) -> list:
     return list(dict.fromkeys(lst))
 
-def _time_func(func: Callable):
+def _time_func(func: Callable) -> float:
     start = time.perf_counter()
     func()
     elapsed = time.perf_counter() - start
