@@ -1,7 +1,9 @@
 # Imports
 
+from collections import namedtuple
 from collections.abc import Iterable, Sequence
 import math
+import statistics
 import time
 from typing import Callable
 
@@ -97,7 +99,12 @@ def _time_func(func: Callable) -> float:
     
     return elapsed
 
-def time_func(func: Callable, iterations: int=1, quiet: bool=False) -> tuple[float, float]:
+def time_func(
+    func: Callable, 
+    iterations: int=1,
+    warmups: int=0,
+    quiet: bool=False
+) -> tuple[float, float]:
     """Pass in a function to be timed, along with how many times it
     should be run, ex:
         cutils.time_func(lambda: time.sleep(1), 100)
@@ -111,9 +118,15 @@ def time_func(func: Callable, iterations: int=1, quiet: bool=False) -> tuple[flo
     Returns:
         tuple[float, float]: (total time, average time)
     """
-    total = sum(_time_func(func) for _ in range(iterations))
+    for _ in range(warmups):
+        func()
 
+    times = [_time_func(func) for _ in range(iterations)]
+    total = sum(times)
     avg_elapsed = total / iterations
+    min_elapsed = min(times)
+    max_elapsed = max(times)
+    sd_elapsed = statistics.stdev(times)
 
     if avg_elapsed < 0.1:
         avg_display = f"{avg_elapsed * 1_000_000:.3f} microseconds"
@@ -128,4 +141,14 @@ def time_func(func: Callable, iterations: int=1, quiet: bool=False) -> tuple[flo
 
         print(result)
 
-    return (total, avg_elapsed)
+    Tup = namedtuple("times", ["avg", "min", "max", "sd", "total", "raw_times"])
+    res = Tup(
+        avg=avg_elapsed,
+        min=min_elapsed,
+        max=max_elapsed,
+        sd=sd_elapsed,
+        total=total,
+        raw_times=times
+    )
+
+    return res
