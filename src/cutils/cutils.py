@@ -49,7 +49,7 @@ def even_split(lst: list, n: int) -> list[list]:
 
     return [lst[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
-def find_last_index(x: Sequence, target) -> Any:
+def find_last_index(x: Sequence, target: Any) -> Any:
     for i in range(len(x) - 1, -1, -1):
         if x[i] == target:
             return i
@@ -77,7 +77,7 @@ def flatten(container: Iterable) -> list:
 
     return list(_flatten(container))
 
-def get_factors(n: int) -> set:
+def get_factors(n: int) -> set[int]:
     if isinstance(n, int) is False:
         raise(ValueError("Must pass in an integer"))
 
