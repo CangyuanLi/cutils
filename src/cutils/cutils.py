@@ -26,7 +26,7 @@ def chunk_list(lst: list, n: int) -> Generator[list, None, None]:
     for i in range(0, len(lst), n):
         yield lst[i:i+n]
 
-def display_time(seconds: float):
+def display_time(seconds: float) -> str:
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
 
