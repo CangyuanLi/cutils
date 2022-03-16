@@ -5,14 +5,14 @@ from collections.abc import Iterable, Sequence
 import math
 import statistics
 import time
-from typing import Callable
+from typing import Any, Callable, Generator
 
 # Functions
 
 def contains(x: Iterable, elements: Iterable) -> bool:
     return any(elem in x for elem in elements)
 
-def chunk_list(lst: list, n: int) -> list:
+def chunk_list(lst: list, n: int) -> Generator[list, None, None]:
     """Splits a list into n sized chunks
 
     Args:
@@ -49,7 +49,7 @@ def even_split(lst: list, n: int) -> list[list]:
 
     return [lst[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
-def find_last_index(x: Sequence, target) -> any:
+def find_last_index(x: Sequence, target) -> Any:
     for i in range(len(x) - 1, -1, -1):
         if x[i] == target:
             return i
@@ -104,7 +104,7 @@ def time_func(
     iterations: int=1,
     warmups: int=0,
     quiet: bool=False
-) -> tuple[float, float]:
+) -> tuple[float, float, float, float, float, list]:
     """Pass in a function to be timed, along with how many times it
     should be run, ex:
         cutils.time_func(lambda: time.sleep(1), 100)
@@ -141,7 +141,7 @@ def time_func(
 
         print(result)
 
-    Tup = namedtuple("times", ["avg", "min", "max", "sd", "total", "raw_times"])
+    Tup = namedtuple("Tup", ["avg", "min", "max", "sd", "total", "raw_times"])
     res = Tup(
         avg=avg_elapsed,
         min=min_elapsed,
