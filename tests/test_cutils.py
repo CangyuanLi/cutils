@@ -1,12 +1,32 @@
 from cutils import cutils
-import time
 
-def main():
-    # print(cutils.get_factors(1000000))
-    # print(cutils.even_split([1, 2, 3, 4, 5], 900))
-    # print(cutils.flatten([1, "a", [1, 2]]))
+def test_contains():
+    assert cutils.contains("a", "bce") is False
+    assert cutils.contains("a", "alde") is True
+    assert cutils.contains([2, 3, 4], [3, 4]) is True
 
-    cutils.time_func(lambda: cutils.get_factors(500000), iterations=100_000, warmups=3)
+def test_chunk_seq():
+    test_list = [1, 2, 3, 4, 5, 6, 7]
+    assert cutils.chunk_seq(test_list, 2) == [[1, 2], [3, 4], [5, 6], [7]]
+    assert cutils.chunk_seq([], 2) == []
+    assert cutils.chunk_seq("abcdefgh", 4) == ["abcd", "efgh"]
 
-if __name__ == "__main__":
-    main()
+def test_even_split():
+    test_list = [1, 2, 3, 4, 5]
+    assert cutils.even_split(test_list, 6) == [[1], [2], [3], [4], [5], []]
+    assert cutils.even_split((1, 2, 3), 3) == [(1,), (2,), (3,)]
+
+def test_find_last_index():
+    test_list = [4, 2, 4, 4, 2]
+    assert cutils.find_last_index(test_list, 2) == 4
+    assert cutils.find_last_index(test_list, 3) is None
+
+def test_flatten():
+    test_list = [[1], [2], "ab", 3]
+    assert cutils.flatten(test_list) == [1, 2, "ab", 3]
+
+def test_get_factors():
+    assert cutils.get_factors(10) == {2, 5, 1, 10}
+
+def test_ordered_unique():
+    assert cutils.ordered_unique("abbcb") == ["a", "b", "c"]
