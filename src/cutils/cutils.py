@@ -5,14 +5,14 @@ from collections.abc import Callable, Generator, Iterable, Sequence
 import math
 import statistics
 import time
-from typing import Any
+from typing import Any, Optional
 
 # Functions
 
 def contains(source: Iterable, query: Iterable) -> bool:
     return any(elem in query for elem in source)
 
-def _chunk_seq(seq: Sequence, n: int) -> Generator[list, None, None]:
+def _chunk_seq(seq: Sequence, n: int) -> Generator[Sequence, None, None]:
     for i in range(0, len(seq), n):
         yield seq[i:i+n]
 
@@ -56,7 +56,7 @@ def even_split(seq: Sequence, n: int) -> list:
 
     return [seq[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
-def find_last_index(x: Sequence, target: Any) -> int:
+def find_last_index(x: Sequence, target: Any) -> Optional[int]:
     for i in range(len(x) - 1, -1, -1):
         if x[i] == target:
             return i
