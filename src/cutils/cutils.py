@@ -1,30 +1,36 @@
 # Imports
 
 from collections import namedtuple
-from collections.abc import Iterable, Sequence
+from collections.abc import Callable, Generator, Iterable, Sequence
 import math
 import statistics
 import time
-from typing import Any, Callable, Generator
+from typing import Any
 
 # Functions
 
-def contains(x: Iterable, elements: Iterable) -> bool:
-    return any(elem in x for elem in elements)
+def contains(source: Iterable, query: Iterable) -> bool:
+    return any(elem in query for elem in source)
 
-def chunk_list(lst: list, n: int) -> Generator[list, None, None]:
+def _chunk_list(lst: list, n: int) -> Generator[list, None, None]:
+    for i in range(0, len(lst), n):
+        yield lst[i:i+n]
+
+def chunk_list(lst: list, n: int) -> list:
     """Splits a list into n sized chunks
 
     Args:
         lst (list): a list
         n (int): number of items in chunk
 
-    Yields:
+    Returns:
         list: A list of lists of size n, with last list
         being of size len(lst) mod n | n
     """
-    for i in range(0, len(lst), n):
-        yield lst[i:i+n]
+    if n <= 0:
+        raise ValueError("chunk size must be a positive integer")
+        
+    return list(_chunk_list(lst, n))
 
 def display_time(seconds: float) -> str:
     m, s = divmod(seconds, 60)
@@ -49,7 +55,7 @@ def even_split(lst: list, n: int) -> list[list]:
 
     return [lst[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
-def find_last_index(x: Sequence, target: Any) -> Any:
+def find_last_index(x: Sequence, target: Any) -> int:
     for i in range(len(x) - 1, -1, -1):
         if x[i] == target:
             return i
