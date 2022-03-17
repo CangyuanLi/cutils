@@ -2,7 +2,9 @@
 
 # folder ignores
 **/__pycache__
+**/.mypy_cache
 **/venv
+**/.tox
 
 **/.DS_Store
 **/.vscode
@@ -25,3 +27,7 @@
 **.xls
 
 **/*-checkpoint*
+
+**.coverage
+
+**scratch.py
