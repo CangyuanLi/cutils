@@ -1,6 +1,6 @@
-Some personal Python utilities. Only uses standard library.
-
 ![Tests](https://github.com/CangyuanLi/cutils/actions/workflows/tests.yml/badge.svg)
+
+Some personal Python utilities. Only uses standard library.
 
 # Gotchas
 
