@@ -12,11 +12,11 @@ from typing import Any
 def contains(source: Iterable, query: Iterable) -> bool:
     return any(elem in query for elem in source)
 
-def _chunk_list(lst: list, n: int) -> Generator[list, None, None]:
+def _chunk_seq(lst: Sequence, n: int) -> Generator[list, None, None]:
     for i in range(0, len(lst), n):
         yield lst[i:i+n]
 
-def chunk_list(lst: list, n: int) -> list:
+def chunk_seq(seq: Sequence, n: int) -> list:
     """Splits a list into n sized chunks
 
     Args:
@@ -29,8 +29,8 @@ def chunk_list(lst: list, n: int) -> list:
     """
     if n <= 0:
         raise ValueError("chunk size must be a positive integer")
-        
-    return list(_chunk_list(lst, n))
+
+    return list(_chunk_seq(seq, n))
 
 def display_time(seconds: float) -> str:
     m, s = divmod(seconds, 60)
