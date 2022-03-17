@@ -7,6 +7,8 @@
 **/venv
 **/.tox
 
+**/pycutils.egg-info
+
 **/.DS_Store
 **/.vscode
 
