@@ -12,19 +12,19 @@ from typing import Any
 def contains(source: Iterable, query: Iterable) -> bool:
     return any(elem in query for elem in source)
 
-def _chunk_seq(lst: Sequence, n: int) -> Generator[list, None, None]:
-    for i in range(0, len(lst), n):
-        yield lst[i:i+n]
+def _chunk_seq(seq: Sequence, n: int) -> Generator[list, None, None]:
+    for i in range(0, len(seq), n):
+        yield seq[i:i+n]
 
 def chunk_seq(seq: Sequence, n: int) -> list:
     """Splits a list into n sized chunks
 
     Args:
-        lst (list): a list
+        seq (Sequence): a Sequence- any indexable object
         n (int): number of items in chunk
 
     Returns:
-        list: A list of lists of size n, with last list
+        list: A list of sequences of size n, with last sequence
         being of size len(lst) mod n | n
     """
     if n <= 0:
@@ -38,22 +38,23 @@ def display_time(seconds: float) -> str:
 
     return f"{h} hours, {m} minutes, and {s:.2f} seconds"
 
-def even_split(lst: list, n: int) -> list[list]:
+def even_split(seq: Sequence, n: int) -> list:
     """Breaks a list into n roughly equal parts
 
     Args:
-        lst (list): List to split
+        seq (Sequence): Sequence to split
         n (int): Number of parts
 
     Returns:
-        list: List of n lists
+        list: List of n elements of the sequence. 
+        Pads with empty list if n > len(seqence)
     """
     if n <= 0:
-        raise ValueError("n must be greater than 0")
+        raise ValueError("n must be an integer greater than 0")
         
-    k, m = divmod(len(lst), n)
+    k, m = divmod(len(seq), n)
 
-    return [lst[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
+    return [seq[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
 def find_last_index(x: Sequence, target: Any) -> int:
     for i in range(len(x) - 1, -1, -1):
@@ -95,8 +96,8 @@ def get_factors(n: int) -> set[int]:
 
     return factors
 
-def ordered_unique(lst: list) -> list:
-    return list(dict.fromkeys(lst))
+def ordered_unique(x: Iterable) -> list:
+    return list(dict.fromkeys(x))
 
 def _time_func(func: Callable) -> float:
     start = time.perf_counter()
