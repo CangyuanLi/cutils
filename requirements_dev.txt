@@ -1,4 +1,5 @@
 attrs==21.4.0
+coverage==6.3.2
 distlib==0.3.4
 filelock==3.6.0
 iniconfig==1.1.1
@@ -8,9 +9,10 @@ packaging==21.3
 platformdirs==2.5.1
 pluggy==1.0.0
 py==1.11.0
--e git+https://github.com/CangyuanLi/cutils.git@a5b2416ac56bb46c0d0cea1e0a0c53de3f765e8c#egg=pycutils
+-e git+https://github.com/CangyuanLi/cutils.git@f1f59fb5527237e5f3c46925e05d156d9d54fd7a#egg=pycutils
 pyparsing==3.0.7
 pytest==7.1.0
+pytest-cov==3.0.0
 six==1.16.0
 toml==0.10.2
 tomli==2.0.1
