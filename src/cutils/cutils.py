@@ -10,6 +10,16 @@ from typing import Any, Optional
 # Functions
 
 def contains(source: Iterable, query: Iterable) -> bool:
+    """Test if argument 1 contains any element of
+    argument 2.
+
+    Args:
+        source (Iterable): arg 1
+        query (Iterable): arg 2
+
+    Returns:
+        bool: True if arg 1 contains an element of arg 2
+    """
     return any(elem in query for elem in source)
 
 def _chunk_seq(seq: Sequence, n: int) -> Generator[Sequence, None, None]:
@@ -33,6 +43,14 @@ def chunk_seq(seq: Sequence, n: int) -> list:
     return list(_chunk_seq(seq, n))
 
 def display_time(seconds: float) -> str:
+    """Turns seconds into hours, minutes, seconds
+
+    Args:
+        seconds (float): seconds
+
+    Returns:
+        str: A string of hours, minutes, seconds
+    """
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
 
@@ -57,6 +75,15 @@ def even_split(seq: Sequence, n: int) -> list:
     return [seq[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
 def find_last_index(x: Sequence, target: Any) -> Optional[int]:
+    """Finds the last index that the target occurs at
+
+    Args:
+        x (Sequence): the haystack
+        target (Any): the needle
+
+    Returns:
+        Optional[int]: the last index, or none if it does not exist
+    """
     for i in range(len(x) - 1, -1, -1):
         if x[i] == target:
             return i
@@ -65,8 +92,7 @@ def find_last_index(x: Sequence, target: Any) -> Optional[int]:
 
 def flatten(container: Iterable) -> list:
     """Flatten an arbitrarily nested list. Does
-    not unpack string values. Converting a generator
-    object to a list is faster than .append.
+    not unpack string values.
 
     Args:
         container (Iterable): Any container
@@ -74,6 +100,7 @@ def flatten(container: Iterable) -> list:
     Returns:
         list: A flattened list
     """
+    # Converting a generator object to a list is faster than .append.
     def _flatten(container: Iterable):
         for i in container:
             if isinstance(i, (list, set, tuple)):
@@ -85,6 +112,14 @@ def flatten(container: Iterable) -> list:
     return list(_flatten(container))
 
 def get_factors(n: int) -> set[int]:
+    """Returns the factors of an integer
+
+    Args:
+        n (int): number to factorize
+
+    Returns:
+        set[int]: unordered set of all factors
+    """
     if isinstance(n, int) is False:
         raise(ValueError("Must pass in an integer"))
 
@@ -97,6 +132,16 @@ def get_factors(n: int) -> set[int]:
     return factors
 
 def ordered_unique(x: Iterable) -> list:
+    """Gets the unique elements of an iterable,
+    preserves the original order unlike calling
+    set()
+
+    Args:
+        x (Iterable): any Iterable
+
+    Returns:
+        list: a list of unique elements, in original order
+    """
     return list(dict.fromkeys(x))
 
 def _time_func(func: Callable) -> float:
@@ -120,10 +165,11 @@ def time_func(
     Args:
         func (Callable): Any function
         iterations (int, optional): Number of times to run func. Defaults to 1.
+        warmups (int, optional): Number of times to run func before timing. Defaults to 0.
         quiet (bool, optional): Whether to print stats. Defaults to False.
 
     Returns:
-        tuple[float, float]: (total time, average time)
+        tuple[float, float, float, float, float, list]: (average, min, max, sd, total, list of raw times)
     """
     for _ in range(warmups):
         func()
