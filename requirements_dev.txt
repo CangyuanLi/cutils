@@ -1,4 +1,5 @@
 attrs==21.4.0
+build==0.7.0
 coverage==6.3.2
 distlib==0.3.4
 filelock==3.6.0
@@ -6,10 +7,10 @@ iniconfig==1.1.1
 mypy==0.941
 mypy-extensions==0.4.3
 packaging==21.3
+pep517==0.12.0
 platformdirs==2.5.1
 pluggy==1.0.0
 py==1.11.0
--e git+https://github.com/CangyuanLi/cutils.git@f1f59fb5527237e5f3c46925e05d156d9d54fd7a#egg=pycutils
 pyparsing==3.0.7
 pytest==7.1.0
 pytest-cov==3.0.0
