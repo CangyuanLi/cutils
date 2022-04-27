@@ -3,6 +3,7 @@
 from collections import namedtuple
 from collections.abc import Callable, Generator, Iterable, Sequence
 import math
+import re
 import statistics
 import time
 from typing import Any, Optional
@@ -143,6 +144,19 @@ def ordered_unique(x: Iterable) -> list:
         list: a list of unique elements, in original order
     """
     return list(dict.fromkeys(x))
+
+def strip_blanks(string: str) -> str:
+    """Remove all whitespace from a string
+
+    Args:
+        string (str): A string to strip
+
+    Returns:
+        str: A string with no whitespace
+    """
+    string = re.sub(r"(\s|\u180B|\u200B|\u200C|\u200D|\u2060|\uFEFF)+", "", string)
+
+    return string
 
 def _time_func(func: Callable) -> float:
     start = time.perf_counter()

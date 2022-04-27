@@ -30,3 +30,6 @@ def test_get_factors():
 
 def test_ordered_unique():
     assert cutils.ordered_unique("abbcb") == ["a", "b", "c"]
+
+def test_strip_blanks():
+    assert cutils.strip_blanks("a   bc\u2009") == "abc"
