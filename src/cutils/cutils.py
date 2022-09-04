@@ -3,6 +3,7 @@
 from collections import namedtuple
 from collections.abc import Callable, Generator, Iterable, Sequence
 import math
+import random
 import re
 import statistics
 import time
@@ -42,6 +43,17 @@ def chunk_seq(seq: Sequence, n: int) -> list:
         raise ValueError("chunk size must be a positive integer")
 
     return list(_chunk_seq(seq, n))
+
+def _random_chunk_seq(seq: Sequence, min: int, max: int):
+    i = 0
+    while i < len(seq):
+        chunk_size = random.randint(min, max)
+        yield seq[i:i+chunk_size]
+
+        i += chunk_size
+
+def random_chunk_seq(seq: Sequence, min: int, max: int):
+    return list(_random_chunk_seq(seq, min, max))
 
 def display_time(seconds: float) -> str:
     """Turns seconds into hours, minutes, seconds
