@@ -205,7 +205,12 @@ def time_func(
     avg_elapsed = total / iterations
     min_elapsed = min(times)
     max_elapsed = max(times)
-    sd_elapsed = statistics.stdev(times)
+
+    # standard deviation requires at least two data points
+    try:
+        sd_elapsed = statistics.stdev(times)
+    except statistics.StatisticsError:
+        sd_elapsed = 0
 
     if avg_elapsed < 0.1:
         avg_display = f"{avg_elapsed * 1_000_000:.3f} microseconds"
