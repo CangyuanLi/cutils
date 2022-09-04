@@ -1,13 +1,27 @@
 # Imports
 
-from collections import namedtuple
 from collections.abc import Callable, Generator, Iterable, Sequence
+from dataclasses import dataclass
 import math
 import random
 import re
 import statistics
 import time
-from typing import Any, Optional
+from typing import Any, Optional, Union
+
+# Types
+
+Real = Union[int, float]
+
+@dataclass
+class TimeFuncRes:
+    avg: Real
+    median: Real
+    min: Real
+    max: Real
+    sd: Real
+    total: Real
+    raw_times: list[Real]
 
 # Functions
 
@@ -178,11 +192,12 @@ def _time_func(func: Callable) -> float:
     return elapsed
 
 def time_func(
-    func: Callable, 
+    func: Callable,
+    func_name: str="Function",
     iterations: int=1,
     warmups: int=0,
     quiet: bool=False
-) -> tuple[float, float, float, float, float, list]:
+) -> TimeFuncRes:
     """Pass in a function to be timed, along with how many times it
     should be run, ex:
         cutils.time_func(lambda: time.sleep(1), 100)
@@ -195,7 +210,7 @@ def time_func(
         quiet (bool, optional): Whether to print stats. Defaults to False.
 
     Returns:
-        tuple[float, float, float, float, float, list]: (average, min, max, sd, total, list of raw times)
+        TimeFuncRes: (average, min, max, sd, total, list of raw times)
     """
     for _ in range(warmups):
         func()
@@ -203,6 +218,7 @@ def time_func(
     times = [_time_func(func) for _ in range(iterations)]
     total = sum(times)
     avg_elapsed = total / iterations
+    median_elapsed = statistics.median(times)
     min_elapsed = min(times)
     max_elapsed = max(times)
 
@@ -219,15 +235,15 @@ def time_func(
 
     if quiet is False:
         result = (
-            f"Function ran {iterations:,} times and completed in {display_time(total)} "
-            f"for an average time of {avg_display}"
+            f"{func_name} ran {iterations:,} times and completed in {display_time(total)} "
+            f"for an average time of {avg_display} per run"
         )
 
         print(result)
 
-    Tup = namedtuple("Tup", ["avg", "min", "max", "sd", "total", "raw_times"])
-    res = Tup(
+    res = TimeFuncRes(
         avg=avg_elapsed,
+        median=median_elapsed,
         min=min_elapsed,
         max=max_elapsed,
         sd=sd_elapsed,
