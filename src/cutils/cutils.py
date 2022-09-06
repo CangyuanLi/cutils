@@ -29,6 +29,10 @@ def contains(source: Iterable, query: Iterable) -> bool:
     """Test if argument 1 contains any element of
     argument 2.
 
+    Note that this method seems to be, on average, faster than using any(). any() can be faster
+    in the case that no elements of the query are in the source, but the difference is negligeble.
+    However, in the case that elements of the query are in the source, this method is much faster.
+
     Args:
         source (Iterable): arg 1
         query (Iterable): arg 2
@@ -36,7 +40,11 @@ def contains(source: Iterable, query: Iterable) -> bool:
     Returns:
         bool: True if arg 1 contains an element of arg 2
     """
-    return any(elem in query for elem in source)
+    for i in query:
+        if i in source:
+            return True
+
+    return False
 
 def _chunk_seq(seq: Sequence, n: int) -> Generator[Sequence, None, None]:
     for i in range(0, len(seq), n):
