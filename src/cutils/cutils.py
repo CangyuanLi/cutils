@@ -40,7 +40,11 @@ def contains(source: Iterable, query: Iterable) -> bool:
     Returns:
         bool: True if arg 1 contains an element of arg 2
     """
-    return any(elem in source for elem in query)
+    for i in query:
+        if i in source:
+            return True
+
+    return False
 
 def _chunk_seq(seq: Sequence, n: int) -> Generator[Sequence, None, None]:
     for i in range(0, len(seq), n):
