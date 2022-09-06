@@ -4,12 +4,20 @@ def test_contains():
     assert cutils.contains("a", "bce") is False
     assert cutils.contains("a", "alde") is True
     assert cutils.contains([2, 3, 4], [3, 4]) is True
+    assert cutils.contains(list(range(0, 100000)), {9, 100}) is True
+    assert cutils.contains({9, 100}, list(range(0, 100000))) is True
+    assert cutils.contains("abcdefg", "hijk") is False
+    assert cutils.contains("abcdefg", "a") is True
 
 def test_chunk_seq():
     test_list = [1, 2, 3, 4, 5, 6, 7]
     assert cutils.chunk_seq(test_list, 2) == [[1, 2], [3, 4], [5, 6], [7]]
     assert cutils.chunk_seq([], 2) == []
     assert cutils.chunk_seq("abcdefgh", 4) == ["abcd", "efgh"]
+
+def test_random_chunk_seq():
+    test_list = [1, 2, 3, 4, 5, 6, 7, 9, 10]
+    assert cutils.flatten(cutils.random_chunk_seq(test_list, 2, 5)) == test_list
 
 def test_even_split():
     test_list = [1, 2, 3, 4, 5]
