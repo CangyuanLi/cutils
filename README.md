@@ -2,6 +2,18 @@
 
 Some personal Python utilities. Only uses standard library.
 
+# Installation
+
+```bash
+pip install pycutils
+```
+
+# Usage
+
+```python
+import cutils
+```
+
 # Gotchas
 
 ## Dictionaries
