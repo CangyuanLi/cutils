@@ -1,57 +1,25 @@
+# pycutils: Small, commonly used python functions
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pycutils)
 ![Tests](https://github.com/CangyuanLi/cutils/actions/workflows/tests.yml/badge.svg)
 
-Some personal Python utilities. Only uses standard library.
+## What is it?
 
-# Installation
+**cutils** is a collection of small but useful and widely applicable functions. Since it only uses the standard library, it is extremely lightweight and portable.
 
-```bash
+# Usage:
+
+## Installing
+
+The easiest way is to install **cutils** is from PyPI using pip:
+
+```shell
 pip install pycutils
 ```
+
+## Running
 
 # Usage
 
 ```python
 import cutils
 ```
-
-# Gotchas
-
-## Dictionaries
-
-What is the difference between
-
-```python
-dict1 = dict(zip(["a", "b", "c"], [[]] * 3))
-```
-and 
-
-```python
-dict2 = {key:[] for key in ["a", "b", "c"]}
-```
-When you print them, both return
-
-```python
-{'a': [], 'b': [], 'c': []}
-```
-But try, for example, 
-
-```python
-dict1["a"].append(1)
-print(dict1)
-dict2["a"].append(1)
-print(dict2)
-```
-
-Surprisingly, you get
-
-```python
-dict1 = {'a': [1], 'b': [1], 'c': [1]}
-dict2 = {'a': [1], 'b': [], 'c': []}
-```
-What happened here? The empty lists in dict1 are actually the same list, so when you change one, you change all of them. You can run into the same trap if you initialize a dictionary with
-
-```python
-dict.fromkeys(["a", "b", "c"], [])
-```
-
-or if you pass in a mutable object as a default argument to a function.
