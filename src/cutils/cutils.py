@@ -1,6 +1,6 @@
 # Imports
 
-from collections.abc import Callable, Generator, Iterable, Sequence
+from collections.abc import Callable, Generator, Iterable, MutableMapping, Sequence
 from dataclasses import dataclass
 import functools
 import math
@@ -146,6 +146,17 @@ def flatten(container: Iterable) -> list:
                 yield i
 
     return list(_flatten(container))
+
+def _flatten_dict(d: MutableMapping, parent_key: str, sep: str):
+    for k, v in d.items():
+        new_key = parent_key + sep + k if parent_key else k
+        if isinstance(v, MutableMapping):
+            yield from flatten_dict(v, new_key, sep=sep).items()
+        else:
+            yield new_key, v
+
+def flatten_dict(d: MutableMapping, parent_key: str = "", sep: str = "."):
+    return dict(_flatten_dict(d, parent_key, sep))
 
 def get_factors(n: int) -> set[int]:
     """Returns the factors of an integer
