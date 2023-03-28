@@ -9,7 +9,7 @@ import re
 import statistics
 import time
 import threading
-from typing import Any, Optional, Union
+from typing import Any, Union
 
 # Types
 
