@@ -120,7 +120,7 @@ def even_split(seq: Sequence, n: int) -> list:
     return [seq[i * k + min(i, m) : (i + 1) * k + min(i + 1, m)] for i in range(n)]
 
 
-def find_last_index(x: Sequence, target: Any) -> Optional[int]:
+def find_last_index(x: Sequence, target: Any) -> int:
     """Finds the last index that the target occurs at
 
     Args:
@@ -134,7 +134,7 @@ def find_last_index(x: Sequence, target: Any) -> Optional[int]:
         if x[i] == target:
             return i
 
-    return None
+    raise ValueError("substring not found")
 
 
 def flatten(container: Iterable) -> list:
