@@ -15,6 +15,7 @@ from typing import Any, Optional, Union
 
 Real = Union[int, float]
 
+
 @dataclass
 class TimeFuncRes:
     avg: Real
@@ -25,7 +26,9 @@ class TimeFuncRes:
     total: Real
     raw_times: list[Real]
 
+
 # Functions
+
 
 def contains(source: Iterable, query: Iterable) -> bool:
     """Test if argument 1 contains any element of
@@ -47,9 +50,11 @@ def contains(source: Iterable, query: Iterable) -> bool:
 
     return False
 
+
 def _chunk_seq(seq: Sequence, n: int) -> Generator[Sequence, None, None]:
     for i in range(0, len(seq), n):
-        yield seq[i:i+n]
+        yield seq[i : i + n]
+
 
 def chunk_seq(seq: Sequence, n: int) -> list:
     """Splits a list into n sized chunks
@@ -67,16 +72,19 @@ def chunk_seq(seq: Sequence, n: int) -> list:
 
     return list(_chunk_seq(seq, n))
 
+
 def _random_chunk_seq(seq: Sequence, min: int, max: int):
     i = 0
     while i < len(seq):
         chunk_size = random.randint(min, max)
-        yield seq[i:i+chunk_size]
+        yield seq[i : i + chunk_size]
 
         i += chunk_size
 
+
 def random_chunk_seq(seq: Sequence, min: int, max: int):
     return list(_random_chunk_seq(seq, min, max))
+
 
 def display_time(seconds: float) -> str:
     """Turns seconds into hours, minutes, seconds
@@ -92,6 +100,7 @@ def display_time(seconds: float) -> str:
 
     return f"{h} hours, {m} minutes, and {s:.2f} seconds"
 
+
 def even_split(seq: Sequence, n: int) -> list:
     """Breaks a list into n roughly equal parts
 
@@ -100,15 +109,16 @@ def even_split(seq: Sequence, n: int) -> list:
         n (int): Number of parts
 
     Returns:
-        list: List of n elements of the sequence. 
+        list: List of n elements of the sequence.
         Pads with empty list if n > len(seqence)
     """
     if n <= 0:
         raise ValueError("n must be an integer greater than 0")
-        
+
     k, m = divmod(len(seq), n)
 
-    return [seq[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
+    return [seq[i * k + min(i, m) : (i + 1) * k + min(i + 1, m)] for i in range(n)]
+
 
 def find_last_index(x: Sequence, target: Any) -> Optional[int]:
     """Finds the last index that the target occurs at
@@ -126,6 +136,7 @@ def find_last_index(x: Sequence, target: Any) -> Optional[int]:
 
     return None
 
+
 def flatten(container: Iterable) -> list:
     """Flatten an arbitrarily nested list. Does
     not unpack string values.
@@ -136,6 +147,7 @@ def flatten(container: Iterable) -> list:
     Returns:
         list: A flattened list
     """
+
     # Converting a generator object to a list is faster than .append.
     def _flatten(container: Iterable):
         for i in container:
@@ -147,6 +159,7 @@ def flatten(container: Iterable) -> list:
 
     return list(_flatten(container))
 
+
 def _flatten_dict(d: MutableMapping, parent_key: str, sep: str):
     for k, v in d.items():
         new_key = parent_key + sep + k if parent_key else k
@@ -155,8 +168,10 @@ def _flatten_dict(d: MutableMapping, parent_key: str, sep: str):
         else:
             yield new_key, v
 
+
 def flatten_dict(d: MutableMapping, parent_key: str = "", sep: str = "."):
     return dict(_flatten_dict(d, parent_key, sep))
+
 
 def get_factors(n: int) -> set[int]:
     """Returns the factors of an integer
@@ -168,7 +183,7 @@ def get_factors(n: int) -> set[int]:
         set[int]: unordered set of all factors
     """
     if isinstance(n, int) is False:
-        raise(ValueError("Must pass in an integer"))
+        raise (ValueError("Must pass in an integer"))
 
     factors = set()
     for i in range(1, int(math.sqrt(n)) + 1):
@@ -177,6 +192,7 @@ def get_factors(n: int) -> set[int]:
             factors.add(int(n // i))
 
     return factors
+
 
 def ordered_unique(x: Iterable) -> list:
     """Gets the unique elements of an iterable,
@@ -191,6 +207,7 @@ def ordered_unique(x: Iterable) -> list:
     """
     return list(dict.fromkeys(x))
 
+
 def strip_blanks(string: str) -> str:
     """Remove all whitespace from a string
 
@@ -204,19 +221,21 @@ def strip_blanks(string: str) -> str:
 
     return string
 
+
 def _time_func(func: Callable) -> float:
     start = time.perf_counter()
     func()
     elapsed = time.perf_counter() - start
-    
+
     return elapsed
+
 
 def time_func(
     func: Callable,
-    func_name: str="Function",
-    iterations: int=1,
-    warmups: int=0,
-    quiet: bool=False
+    func_name: str = "Function",
+    iterations: int = 1,
+    warmups: int = 0,
+    quiet: bool = False,
 ) -> TimeFuncRes:
     """Pass in a function to be timed, along with how many times it
     should be run, ex:
@@ -268,12 +287,13 @@ def time_func(
         max=max_elapsed,
         sd=sd_elapsed,
         total=total,
-        raw_times=times
+        raw_times=times,
     )
 
     return res
 
-def rate_limited(limit: int, period: int=1):
+
+def rate_limited(limit: int, period: int = 1):
     lock = threading.Lock()
     max_per_second = limit / period
     min_interval = 1.0 / max_per_second
