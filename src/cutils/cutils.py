@@ -134,7 +134,7 @@ def find_last_index(x: Sequence, target: Any) -> int:
         if x[i] == target:
             return i
 
-    raise ValueError("substring not found")
+    raise ValueError("target not found")
 
 
 def flatten(container: Iterable) -> list:
