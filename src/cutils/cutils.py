@@ -10,7 +10,7 @@ import re
 import statistics
 import time
 import threading
-from typing import Any, Protocol, TypeVar, Union
+from typing import Any, Protocol, Union
 
 # Types
 
@@ -48,9 +48,10 @@ def contains(source: Iterable, query: Iterable) -> bool:
     Returns:
         bool: True if arg 1 contains an element of arg 2
     """
-    # Note that this method seems to be, on average, faster than using any(). any() can be faster
-    # in the case that no elements of the query are in the source, but the difference is negligeble.
-    # However, in the case that elements of the query are in the source, this method is much faster.
+    # Note that this method seems to be, on average, faster than using any().
+    # any() can be faster in the case that no elements of the query are in the source,
+    # but the difference is negligeble. However, in the case that elements of the query
+    # are in the source, this method is much faster.
     for i in query:
         if i in source:
             return True
@@ -261,7 +262,8 @@ def time_func(
     Args:
         func (Callable): Any function
         iterations (int, optional): Number of times to run func. Defaults to 1.
-        warmups (int, optional): Number of times to run func before timing. Defaults to 0.
+        warmups (int, optional): Number of times to run func before timing.
+            Defaults to 0.
         quiet (bool, optional): Whether to print stats. Defaults to False.
 
     Returns:
