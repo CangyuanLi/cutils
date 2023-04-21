@@ -52,6 +52,9 @@ def test_flatten():
 def test_get_factors():
     assert cutils.get_factors(10) == {2, 5, 1, 10}
 
+    with pytest.raises(ValueError):
+        cutils.get_factors(1.1)
+
 
 def test_ordered_unique():
     assert cutils.ordered_unique("abbcb") == ["a", "b", "c"]
