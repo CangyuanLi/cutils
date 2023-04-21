@@ -20,6 +20,11 @@ def test_chunk_seq():
     assert cutils.chunk_seq("abcdefgh", 4) == ["abcd", "efgh"]
 
 
+def test_clamp():
+    assert cutils.clamp(5, 1, 2) == 2
+    assert cutils.clamp(0, 1, 2) == 1
+
+
 def test_random_chunk_seq():
     test_list = [1, 2, 3, 4, 5, 6, 7, 9, 10]
     assert cutils.flatten(cutils.random_chunk_seq(test_list, 2, 5)) == test_list
@@ -54,3 +59,4 @@ def test_ordered_unique():
 
 def test_strip_blanks():
     assert cutils.strip_blanks("a   bc\u2009") == "abc"
+    assert cutils.strip_blanks("a") == "a"

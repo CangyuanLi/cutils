@@ -1,5 +1,6 @@
 # Imports
 
+import abc
 from collections.abc import Callable, Generator, Iterable, MutableMapping, Sequence
 from dataclasses import dataclass
 import functools
@@ -9,11 +10,17 @@ import re
 import statistics
 import time
 import threading
-from typing import Any, Union
+from typing import Any, Protocol, TypeVar, Union
 
 # Types
 
 Real = Union[int, float]
+
+
+class Comparable(Protocol):
+    @abc.abstractmethod
+    def __lt__(self, other) -> bool:
+        pass
 
 
 @dataclass
@@ -71,6 +78,15 @@ def chunk_seq(seq: Sequence, n: int) -> list:
         raise ValueError("chunk size must be a positive integer")
 
     return list(_chunk_seq(seq, n))
+
+
+def clamp(num: Comparable, min: Comparable, max: Comparable) -> Comparable:
+    if num > max:
+        return max
+    elif num < min:
+        return min
+    else:
+        return num
 
 
 def _random_chunk_seq(seq: Sequence, min: int, max: int):
@@ -274,8 +290,8 @@ def time_func(
 
     if quiet is False:
         result = (
-            f"{func_name} ran {iterations:,} times and completed in {display_time(total)} "
-            f"for an average time of {avg_display} per run"
+            f"{func_name} ran {iterations:,} times and completed in"
+            f" {display_time(total)} for an average time of {avg_display} per run"
         )
 
         print(result)
