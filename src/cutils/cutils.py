@@ -1,6 +1,7 @@
 # Imports
 
 import abc
+import concurrent.futures
 from collections.abc import Callable, Generator, Iterable, MutableMapping, Sequence
 from dataclasses import dataclass
 import functools
@@ -10,11 +11,13 @@ import re
 import statistics
 import time
 import threading
-from typing import Any, Protocol, Union
+from typing import Any, Literal, Protocol, Union
 
 # Types
 
 Real = Union[int, float]
+
+ParallelOption = Literal["process", "thread"]
 
 
 class Comparable(Protocol):
@@ -337,3 +340,8 @@ def rate_limited(limit: int, period: int = 1):
         return rate_limited_function
 
     return decorate
+
+
+def run_parallel(func: Callable, iterable: Iterable, *args, **kwargs):
+    with concurrent.futures.ProcessPoolExecutor(*args, **kwargs) as pool:
+        return pool.map(func, iterable)
