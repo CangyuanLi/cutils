@@ -7,6 +7,8 @@
 **/venv
 **/.tox
 
+**/.ruff_cache
+
 **/pycutils.egg-info
 
 **/.DS_Store
