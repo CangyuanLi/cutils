@@ -48,6 +48,13 @@ def test_flatten():
     test_list = [[1], [2], "ab", 3]
     assert cutils.flatten(test_list) == [1, 2, "ab", 3]
 
+    test_list = [[[[[[[1]]]]]]]
+    assert cutils.flatten(test_list) == [1]
+
+
+def test_flatten_dict():
+    pass
+
 
 def test_get_factors():
     assert cutils.get_factors(10) == {2, 5, 1, 10}
